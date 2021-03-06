@@ -10,6 +10,9 @@ function snake () {
    this.update = function () {
    this.x += this.xSpeed;
    this.y += this.ySpeed;
+   if (this.x > canvas.width) {
+       this.x = 0
+   }
  
  
    }
