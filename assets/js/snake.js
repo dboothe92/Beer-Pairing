@@ -2,7 +2,7 @@ function snake () {
     this.x = 0;
     this.y= 0;
     this.xSpeed = scale * 1;
-    this.ySpeed = 0;
+    this.ySpeed =  scale * 1;
     this.draw = function () {
         ctx.fillStyle = "#ffe120";
         ctx.fillRect(this.x, this.y, scale, scale);
@@ -12,8 +12,10 @@ function snake () {
    this.y += this.ySpeed;
    if (this.x > canvas.width) {
        this.x = 0
+   }if (this.y > canvas.width) {
+       this.y = 0
    }
- 
+   
  
    }
    this.changeDirection = function(direction) {
