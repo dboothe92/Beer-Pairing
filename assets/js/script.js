@@ -1,126 +1,119 @@
-const canvas = document.querySelector(".canvas");
+const canvas = document.querySelector("#canvas");
 const ctx = canvas.getContext("2d");
+const ctxFruit = canvas.getContext("2d");
 const scale = 10;
 const rows = canvas.height / scale;
 const columns = canvas.width / scale;
-let snake;
 
-//Handles where the snake is drawn and movement
-(function setup() {
-    snake = new Snake();
-    fruit = new Fruit();
+//Original snake 
+let xCoord = 0;
+let yCoord = 0;
+let xSpeed = scale;
+let ySpeed = 0;
 
-    fruit.pickLocation();
+//keeps track of 'score' and tail size
+let tailSize = 0
+let tail = [];
 
-    window.setInterval(()=> {
-        ctx.clearRect(0,0, canvas.width, canvas.height)
-        fruit.draw();
-        snake.update();
-        snake.draw();
-        
-        if(snake.eat(fruit)) {
-            fruit.pickLocation();
-        }
+//setsUp original Placement and controls speed
+function setUp() {
+    let fruitXcoord = (Math.floor(Math.random() * rows -1) + 1) * scale;
+    let fruitYcoord = (Math.floor(Math.random() * columns -1) + 1) * scale;
     
+
+    window.setInterval(function() {
+        //clears canvas
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        //fills 'fruit'
+        ctxFruit.fillRect(fruitXcoord, fruitYcoord, scale, scale);
+        //updates location
+        update();
+        //fills snake
+        fillSnake();
+
+        //keeps count of 'fruit' eaten
+        if (xCoord === fruitXcoord && yCoord === fruitYcoord) {
+            tailSize++;
+            fruitXcoord = (Math.floor(Math.random() * rows -1) + 1) * scale;
+            fruitYcoord = (Math.floor(Math.random() * columns -1) + 1) * scale;
+        };
+
+        //fills tail 
+        for (i = 0; i < tail.length; i++) {
+            ctx.fillRect(tail[i].x, tail[i].y, scale, scale);
+
+            if (tail[i].x === xCoord && tail[i].y === yCoord) {
+                console.log("gotchatail");
+            }
+        };
+
     }, 250);
-}());
 
-//adds ability to control snake with arrow keys
-document.addEventListener('keydown',((evt) => {
-    const direction = evt.key.replace('Arrow', '');
-    snake.changeDirection(direction);
-}));
+    //lets us use arrows to manipulate snake
+    window.addEventListener('keydown',changeDirection);
+};
 
+//fillsSnake
+function fillSnake() {
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(xCoord, yCoord, scale, scale); 
+};
 
-//function that controls movement of snake 
-function Snake () {
-    //Starting point
-    this.x = 0;
-    this.y= 0;
-    this.xSpeed = scale * 1;
-    this.ySpeed = 0;
-    this.total = 0
-    this.tail =[];
-
-    // fills rectangle
-    this.draw = function () {
-        ctx.fillStyle = "#ffe120";
-        for (i = 0; i < this.tail.length; i++) {
-          ctx.fillRect(this.tail[i].x, this.tail[i].y, scale, scale);
-        }
-        ctx.fillRect(this.x, this.y, scale, scale);
-    }
-
-
-    //checks if snake is leaving the canvas
-   this.update = function () {
-    for (i = 0; i < this.tail.length -1; i++) {
-      this.tail[i] = this.tail[i + 1];
-    }
-
-    this.tail[this.total - 1] = {
-      x: this.x,
-      y: this.y
-    };
-
-
-    this.x += this.xSpeed;
-    this.y += this.ySpeed;
-    if (this.x > canvas.width) {
-        this.x = 0
-    } if (this.y > canvas.height) {
-      this.y = 0.
-    } if (this.x < 0) {
-      this.x = canvas.width
-    } if (this.y < 0) {
-      this.y = canvas.height
-    }
-  };
-
-  //Checks direction of snake and adjusts movement
-   this.changeDirection = function(direction) {
-      switch(direction) {
+//Changes Direction
+function changeDirection(event) {
+    event.preventDefault();
+    let direction = event.key.replace('Arrow', '');
+    
+    switch(direction) {
         case "Up":
-           this.xSpeed = 0;
-           this.ySpeed = -scale * 1;
-           break;
+            xSpeed = 0;
+            ySpeed = -scale;
+            break;
         case "Down":
-           this.xSpeed = 0;
-           this.ySpeed = scale * 1;
-           break;
+            xSpeed = 0;
+            ySpeed = scale;
+            break;
         case "Left":
-          this.xSpeed = -scale * 1;
-          this.ySpeed = 0;
-          break;
+            xSpeed = -scale;
+            ySpeed = 0;
+            break;
         case "Right":
-          this.xSpeed = scale * 1;
-          this.ySpeed = 0;
-          break;
-      };
-    };
-
-    this.eat = function(fruit) {
-      if (this.x === fruit.x && this.y === fruit.y) {
-        this.total++;
-        return true;
-      } else {
-        return false;
-      };
-    };
- };
-
-
- function Fruit() {
-    this.x;
-    this.y;
-
-    this.pickLocation = function() {
-        this.x = (Math.floor(Math.random() * rows - 1) + 1) * scale;
-        this.y = (Math.floor(Math.random() * columns - 1) + 1) * scale;
-    };
-
-    this.draw = function() {
-        ctx.fillStyle = "000000";
-        ctx.fillRect(this.x, this.y, scale, scale);
+            xSpeed = scale;
+            ySpeed = 0;
+            break;
     };
 };
+
+//updates tail size and keeps checks location
+function update() {
+    for (i = 0; i < tail.length - 1; i++) {
+        tail[i] = tail[i + 1];
+    };
+
+    tail[tailSize -1] = {
+        x: xCoord,
+        y: yCoord
+    };
+
+    xCoord += xSpeed;
+    yCoord += ySpeed; 
+
+    if (xCoord > canvas.width) {
+        xCoord = 0;
+        console.log("Dead Right");
+    } if (xCoord < 0) {
+        xCoord = canvas.width;
+        console.log("Dead Left");
+    } if (yCoord > canvas.height) {
+        yCoord = 0;
+        console.log("Dead Down");
+    } if (yCoord < 0) {
+        yCoord = canvas.height;
+        console.log("Dead Up");
+    };
+}
+
+setUp();
+
+
+
