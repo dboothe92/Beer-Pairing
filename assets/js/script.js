@@ -1,9 +1,11 @@
-var canvas = document.querySelector("#canvas");
-var ctx = canvas.getContext("2d");
-var ctxFruit = canvas.getContext("2d");
-var scale = 10;
-var rows = canvas.height / scale;
-var columns = canvas.width / scale;
+const canvas = document.querySelector("#canvas");
+const ctx = canvas.getContext("2d");
+const ctxFruit = canvas.getContext("2d");
+const scale = 11;
+const rows = canvas.height / scale;
+const columns = canvas.width / scale;
+const modal = document.querySelector("#modal-container")
+
 
 //Original snake 
 let xCoord = 0;
@@ -16,13 +18,14 @@ let tailSize = 0
 let tail = [];
 
 //setsUp original Placement and controls speed
+//debugger;
 function setUp() {
     let fruitXcoord = (Math.floor(Math.random() * rows -1) + 1) * scale;
     let fruitYcoord = (Math.floor(Math.random() * columns -1) + 1) * scale;
     
 
     window.setInterval(function() {
-        //clears canvas
+       //clears canvas
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         //fills 'fruit'
         ctxFruit.fillRect(fruitXcoord, fruitYcoord, scale, scale);
@@ -36,14 +39,16 @@ function setUp() {
             tailSize++;
             fruitXcoord = (Math.floor(Math.random() * rows -1) + 1) * scale;
             fruitYcoord = (Math.floor(Math.random() * columns -1) + 1) * scale;
+            console.log(tailSize);
         };
 
         //fills tail 
         for (i = 0; i < tail.length; i++) {
             ctx.fillRect(tail[i].x, tail[i].y, scale, scale);
-
+                // snakes death sb
             if (tail[i].x === xCoord && tail[i].y === yCoord) {
                 console.log("gotchatail");
+                gameOver();
             }
         };
 
@@ -97,24 +102,33 @@ function update() {
 
     xCoord += xSpeed;
     yCoord += ySpeed; 
-
+    // snakes death sb
     if (xCoord > canvas.width) {
         xCoord = 0;
-        console.log("Dead Right");
+       console.log("Dead Right");
+       gameOver();
     } if (xCoord < 0) {
         xCoord = canvas.width;
         console.log("Dead Left");
+        gameOver();
     } if (yCoord > canvas.height) {
         yCoord = 0;
         console.log("Dead Down");
+        gameOver();
     } if (yCoord < 0) {
         yCoord = canvas.height;
         console.log("Dead Up");
+        gameOver();
     };
 };
 
 
 setUp();
 
-
+function gameOver () {
+    modal.classList.remove("invisible")
+    
+    
+ // location.reload();
+};
 
