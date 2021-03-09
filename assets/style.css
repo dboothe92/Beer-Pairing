@@ -11,3 +11,14 @@ font-size: 5vh;
 main {
     min-height: 125vh;
 }
+.body {
+    margin: 0px;
+    padding: 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; 
+}
+.canvas{
+    box-shadow: purple 20px 10px 50px;
+}

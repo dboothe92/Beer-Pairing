@@ -5,56 +5,56 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.0.3/tailwind.min.css">
-   <!-- <link rel="stylesheet" href="./assets/style.css">-->
-
+    <link rel="stylesheet" href="./assets/style.css">
+ 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.0.3/tailwind.min.css">
-    <link rel="stylesheet" href="./assets/css/style.css">
-    
+    <!--<link rel="stylesheet" href="/assets/css/style.css">-->
     <title>Snake</title>
 </head>
-<body>
+<body class="body">
     <header>
         <h1 class="text-center  p-2 font-bold text-purple-600 bg-green-200 text-7xl">SSSSSSSSSSSNAKE</h1>
         <h2><span id="score"></span></h2>
     </header>
-    <main>
-        <!--class=invisible-->
-       
-     
-        <div class = "row">
-            <div class ="col"><canvas id="canvas" height="600" width="600" style="background-color: blueviolet"></canvas></div>
-            <div class="col"><table></table></div>
+    <main id="main" class="text-center">
+        <div id="startOptions">
+            <h2>Would you like to play on: </h2>
+            <ul>
+                <li><button type="button" class="my-2 py-3 font-bold bg-green-200 text-purple-600 start-btn" id="easy">Easy</button></li>
+                <li><button type="button" class="my-2 py-3 font-bold bg-green-200 text-purple-600 start-btn" id="normal">Normal</button></li>
+                <li><button type="button" class="my-2 py-3 font-bold bg-green-200 text-purple-600 start-btn" id="hard">Hard</button></li>
+            </ul>
         </div>
-     
-      <div class="modal-container invisible" id="modal-container">
-          <div class="modal">
-              <h2>GAME OVER  HIGH SCORE</h2>
-              <p></p>
-          </div>
-      </div>
-   
+
+        <div id="gameContainer" class="grid grid-cols-2 invisible">
+            <div class="hide"><canvas class="canvas"  id="canvas"   style="background-color: blueviolet"></canvas></div>
+            <div>bfsvz fd sd</div>
+        </div>
+    
+  
+   <!--high score-->
+<div class="modal-container invisible" id="modal-container">
+    <div class="modal">
+        <h2>GAME OVER  HIGH SCORE</h2>
+        <p></p>
+        <button class="play-again bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">PLAY AGAIN</button> <button class="bg-red-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">QUIT</button>
+    </div>
+</div>
 
    
 
     <footer class="bg-green-200">
         Dan and Sebastian and Jordan
     </footer>
-
-
-
-
-
-
-
-
-
-
-
-    </main>
+ </main>
    
     <!--Linking js file-->
     <script type="text/javascript" src="./assets/js/script.js"> </script>
+    <script type="text/javascript" src="./assets/js/snake.js"></script>
 </body>
-<script type="text/javascript" src="./assets/js/snake.js"></script>
-<script type="text/javascript" src="./assets/js/script.js"> </script>
 </html>
+
+
+
+
+

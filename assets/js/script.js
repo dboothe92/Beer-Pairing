@@ -1,8 +1,8 @@
 //Difficulty selection
-const easy = document.querySelector("#easy");
+var easy = document.querySelector("#easy");
 const normal = document.querySelector("#normal");
 const hard = document.querySelector("#hard");
-
+debugger
 //Keeps track of game mode
 let buttonClick;
 

@@ -1,4 +1,4 @@
-/*function snake () {
+function snake () {
     this.x = 0;
     this.y= 0;
     this.xSpeed = scale * 1;
