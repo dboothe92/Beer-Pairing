@@ -6,25 +6,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.0.3/tailwind.min.css">
-    <link rel="stylesheet" href="./assets/style.css">
-    <title>SNAAAAAAAKE</title>
+    <link rel="stylesheet" href="./assets/css/style.css">
+    
+    <title>Snake</title>
 </head>
 <body>
     <header>
-        <h1 class="text-center font-bold text-purple-600 bg-green-200">SNAAAAAAAKE</h1>
+        <h1 class="text-center  p-2 font-bold text-purple-600 bg-green-200 text-7xl">SSSSSSSSSSSNAKE</h1>
         <h2><span id="score"></span></h2>
     </header>
 
-    <main>
-        <div class = "row">
-            <div class ="col"><canvas id="canvas" height="600" width="600" style="background-color: blueviolet"></canvas></div>
-            <div class="col"><table></table></div>
+    <main id="main" class="text-center">
+        <div id="startOptions">
+            <h2>Would you like to play on: </h2>
+            <ul>
+                <li><button type="button" class="my-2 py-3 font-bold bg-green-200 text-purple-600 start-btn" id="easy">Easy</button></li>
+                <li><button type="button" class="my-2 py-3 font-bold bg-green-200 text-purple-600 start-btn" id="normal">Normal</button></li>
+                <li><button type="button" class="my-2 py-3 font-bold bg-green-200 text-purple-600 start-btn" id="hard">Hard</button></li>
+            </ul>
+        </div>
+
+        <div id="gameContainer" class="grid grid-cols-2 invisible">
+            <div class="hide"><canvas id="canvas"  style="background-color: blueviolet"></canvas></div>
+            <div>bfsvz fd sd</div>
         </div>
     </main>
 
     <footer class="bg-green-200">
-        Dan and Sebastian
+        Dan and Sebastian and Jordan
     </footer>
+
+    
 
     <!--Linking js file-->
     <script type="text/javascript" src="./assets/js/script.js"> </script>
