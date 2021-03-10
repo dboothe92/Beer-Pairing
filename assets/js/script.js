@@ -2,7 +2,8 @@
 var easy = document.querySelector("#easy");
 const normal = document.querySelector("#normal");
 const hard = document.querySelector("#hard");
-debugger
+var playAgain = document.querySelector(".play-again ")
+//debugger
 //Keeps track of game mode
 let buttonClick;
 
@@ -74,7 +75,9 @@ function setUp() {
     gameContainer.removeAttribute("class", "invisible");
     main.removeChild(startOptions);
 
-    window.setInterval(function() {
+    window.setInterval(function() { //debugger;
+        
+      
        //clears canvas
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         //fills 'fruit'
@@ -135,6 +138,7 @@ function changeDirection(event) {
 
 //Timer that makes game function
 function gamePlay() {
+    
     //clears canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -207,23 +211,25 @@ function update() {
 
     xCoord += xSpeed;
     yCoord += ySpeed; 
+    
     // snakes death sb
     if (xCoord > canvas.width) {
         xCoord = 0;
-       console.log("Dead Right");
-       gameOver();
+        gameOver();
+      // console.log("Dead Right");
+         
     } if (xCoord < 0) {
         xCoord = canvas.width;
-        console.log("Dead Left");
-        gameOver();
+      //  console.log("Dead Left");
+      gameOver();
     } if (yCoord > canvas.height) {
         yCoord = 0;
-        console.log("Dead Down");
-        gameOver();
+      //  console.log("Dead Down");
+      gameOver();
     } if (yCoord < 0) {
         yCoord = canvas.height;
-        console.log("Dead Up");
-        gameOver();
+       // console.log("Dead Up");
+       gameOver();
     };
 };
 
@@ -231,7 +237,8 @@ function update() {
 setUp();
 
 function gameOver () {
-    modal.classList.remove("invisible")
+    modal.classList.remove("invisible");
+
     
     
  // location.reload();

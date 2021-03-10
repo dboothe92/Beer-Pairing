@@ -1,4 +1,6 @@
-function snake () {
+//function that controls movement of snake 
+function Snake () {
+    //Starting point
     this.x = 0;
     this.y= 0;
     this.xSpeed = scale * 1;
@@ -7,6 +9,8 @@ function snake () {
         ctx.fillStyle = "#ffe120";
         ctx.fillRect(this.x, this.y, scale, scale);
     }
+
+    //checks if snake is leaving the canvas
    this.update = function () {
    this.x += this.xSpeed;
    this.y += this.ySpeed;
@@ -36,9 +40,7 @@ function snake () {
           this.xSpeed = scale * 1;
           this.ySpeed = 0;
           break;
-           
- 
-      }
-    }
- }
+      };
+    };
+ };
  
