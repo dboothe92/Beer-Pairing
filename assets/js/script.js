@@ -172,7 +172,7 @@ function update() {
 const modal = document.querySelector("#modal-container")
 // varsiables for <p> in game over <div> and var for getting array in local storage for printing
 let scoreBoard = document.querySelector(".score")
-let plyerScore = localStorage.getItem("score")
+let plyerScore = localStorage.getItem("score" ,"value")
 plyerScore = JSON.stringify(plyerScore);
 // this ends game and has event listeners for high score section "buttons"
 function gameOver () {
@@ -187,6 +187,7 @@ scoreBoard.innerHTML= plyerScore;
    
     playAgain.addEventListener("click", function () {
         location.reload();
+        Storage.removeItem("score")
     })
 
     quit.addEventListener("click", function () {
