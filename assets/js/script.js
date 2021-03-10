@@ -53,8 +53,8 @@ let fruitYcoord = (Math.floor(Math.random() * columns -1) + 1) * scale;
 //Keeps track of 'score' and tail size
 let tailSize = 0
 let tail = [];
-let timeOuts = [];
-let timer;
+let score = [];
+
 //Sets up original placement and controls speed
 function setUp() {
     //removes game start buttons
@@ -102,6 +102,9 @@ function gamePlay() {
         tailSize++;
         fruitXcoord = (Math.floor(Math.random() * rows -1) + 1) * scale;
         fruitYcoord = (Math.floor(Math.random() * columns -1) + 1) * scale;
+        //score.push(tailSize);
+        //localStorage.setItem("score",score);
+       // console.log(score);
         //Speeds up snake gradually for each fruit on "Normal Mode"
         if (buttonClick === "normal") {
             speed = speed - 5;
@@ -118,8 +121,8 @@ function gamePlay() {
     };
     //fills tail 
     fillTail();
-  timer = setTimeout(gamePlay, speed);
-   timeOuts.push(timer);
+   setTimeout(gamePlay, speed);
+  // timeOuts.push(timer);
 
 };
 //Fills snake
@@ -167,10 +170,20 @@ function update() {
     };
 };
 const modal = document.querySelector("#modal-container")
+// varsiables for <p> in game over <div> and var for getting array in local storage for printing
+let scoreBoard = document.querySelector(".score")
+let plyerScore = localStorage.getItem("score")
+plyerScore = JSON.stringify(plyerScore);
 // this ends game and has event listeners for high score section "buttons"
 function gameOver () {
+   
     modal.classList.remove("invisible");
    gameContainer.setAttribute("class", "invisible");
+   score.push(tailSize);
+   localStorage.setItem("score",score);
+scoreBoard.innerHTML= plyerScore;
+
+   
    
     playAgain.addEventListener("click", function () {
         location.reload();
@@ -181,4 +194,9 @@ function gameOver () {
     })
  
 }
+
+
+//plyerScore = JSON.stringify(plyerScore);
+
+
 
