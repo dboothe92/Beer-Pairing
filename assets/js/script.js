@@ -135,6 +135,7 @@ function fillTail() {
     for (i = 0; i < tail.length; i++) {
         ctx.fillRect(tail[i].x, tail[i].y, scale, scale);
         if (tail[i].x === xCoord && tail[i].y === yCoord) {
+            localStore()
             gameOver();
             console.log("gotchatail");
         }
@@ -153,41 +154,46 @@ function update() {
     yCoord += ySpeed; 
     if (xCoord > canvas.width) {
         xCoord = 0;
+        localStore()
        gameOver();
         console.log("deag right");
     } if (xCoord < 0) {
         xCoord = canvas.width;
+        localStore()
         gameOver();
         console.log("Dead Left");
     } if (yCoord > canvas.height) {
         yCoord = 0;
+        localStore()
         gameOver();
         console.log("Dead Down");
     } if (yCoord < 0) {
         yCoord = canvas.height;
+        localStore()
         gameOver();
         console.log("Dead Up");
     };
 };
 const modal = document.querySelector("#modal-container")
 // varsiables for <p> in game over <div> and var for getting array in local storage for printing
-let scoreBoard = document.querySelector(".score")
-let plyerScore = localStorage.getItem("score" ,"value")
+
 plyerScore = JSON.stringify(plyerScore);
 // this ends game and has event listeners for high score section "buttons"
 function gameOver () {
+    let scoreBoard = document.querySelector(".score")
+let plyerScore = localStorage.getItem("score" ,"value")
    
     modal.classList.remove("invisible");
    gameContainer.setAttribute("class", "invisible");
-   score.push(tailSize);
-   localStorage.setItem("score",score);
+  // score.push(tailSize);
+   //localStorage.setItem("score",score);
 scoreBoard.innerHTML= plyerScore;
 
    
    
     playAgain.addEventListener("click", function () {
         location.reload();
-        Storage.removeItem("score")
+       // Storage.removeItem("score")
     })
 
     quit.addEventListener("click", function () {
@@ -201,3 +207,7 @@ scoreBoard.innerHTML= plyerScore;
 
 
 
+function localStore () {
+    score.push(tailSize);
+   localStorage.setItem("score",score);
+}
