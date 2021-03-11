@@ -4,16 +4,21 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="stylesheet" href="./assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.0.3/tailwind.min.css">
+
     <title>Snake</title>
 </head>
+
 <body class="body">
     <header>
         <h1 class="text-center  p-2 font-bold text-purple-600 bg-green-200 text-7xl">SSSSSSSSSSSNAKE</h1>
         <h2><span id="score"></span></h2>
     </header>
     <main id="main" class="text-center">
+
+        <!--Options to select difficulty-->
         <div id="startOptions">
             <h2>Would you like to play on: </h2>
             <ul>
@@ -23,22 +28,19 @@
             </ul>
         </div>
 
+        <!--Container that holds game board-->
         <div id="gameContainer" class=" invisible">
-            <div class="hide"><canvas class="canvas" height="600" width="600"  id="canvas"   style="background-color: blueviolet"></canvas></div>
-
+            <div class="hide"><canvas class="canvas" id="canvas" style="background-color: blueviolet"></canvas></div>
         </div>
     
-  
    <!--high score-->
-<div class="modal-container invisible" id="modal-container">
-    <div class="modal">
-        <h2>GAME OVER SCORE</h2>
-        <p class="score"></p>
-        <button class="play-again bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">PLAY AGAIN</button> <button class=" quit bg-red-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">QUIT</button>
+    <div class="modal-container invisible" id="modal-container">
+        <div class="modal">
+            <h2>GAME OVER SCORE</h2>
+            <p class="score"></p>
+            <button class="play-again bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">PLAY AGAIN</button> <button class=" quit bg-red-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">QUIT</button>
+        </div>
     </div>
-</div>
-
-   
 
     <footer class="bg-green-200">
         Dan and Sebastian and Jordan
