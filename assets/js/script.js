@@ -2,8 +2,15 @@
 const easy = document.querySelector("#easy");
 const normal = document.querySelector("#normal");
 const hard = document.querySelector("#hard");
-var playAgain = document.querySelector(".play-again")
-var quit = document.querySelector(".quit");
+const impossible = document.querySelector("#impossible");
+const playAgain = document.querySelector(".play-again")
+const quit = document.querySelector(".quit");
+const dead = document.querySelector("#gameDone");
+const reason = document.querySelector("#deathReason");
+let modal = document.querySelector("#modal-container");
+let canvasContainer = document.querySelector("#canvasContainer");
+
+let deathReason;
 
 //Keeps track of game mode
 let buttonClick;
@@ -35,6 +42,14 @@ hard.addEventListener("click", function() {
     setUp();
 });
 
+impossible.addEventListener("click", function() {
+    buttonClick = impossible.textContent.toLowerCase();
+    speed = 130;
+    canvas.setAttribute("height", 300);
+    canvas.setAttribute("width", 300);
+    setUp();
+});
+
 //Creates canvas
 const main = document.querySelector("#main");
 const canvas = document.querySelector("#canvas");
@@ -61,7 +76,7 @@ let fruitYcoord = (Math.floor(Math.random() * columns -1) + 1) * scale;
 //Keeps track of 'score' and tail size
 let tailSize = 0
 let tail = [];
-let score = [];
+let tempScore = JSON.parse(localStorage.getItem("score"));
 
 //variable to hold interval
 let timer;
@@ -73,11 +88,16 @@ function setUp() {
     main.removeChild(startOptions);
 
     //lets us use arrows to manipulate snake
-    window.addEventListener('keydown',changeDirection);
+    if (buttonClick === "impossible") {
+        addEventListener('keydown', impossibleDirection);
+    } else {
+        addEventListener('keydown',changeDirection);
+    }
 
     move();
 };
 
+//Holds Interval
 function move() {
     timer = setInterval(gamePlay, speed);
 }
@@ -108,6 +128,32 @@ function changeDirection(event) {
     };
 };
 
+//Changes direction on impossible mode
+function impossibleDirection(event) {
+    event.preventDefault();
+
+    let direction = event.key.replace('Arrow', '');
+
+    switch(direction) {
+        case "Up":
+            xSpeed = 0;
+            ySpeed = scale;
+            break;
+        case "Down":
+            xSpeed = 0;
+            ySpeed = -scale;
+            break;
+        case "Left":
+            xSpeed = scale;
+            ySpeed = 0;
+            break;
+        case "Right":
+            xSpeed = -scale;
+            ySpeed = 0;
+            break;
+    };
+};
+
 //Timer that makes game function
 function gamePlay() {
     //clears canvas
@@ -123,9 +169,6 @@ function gamePlay() {
         tailSize++;
         fruitXcoord = (Math.floor(Math.random() * rows -1) + 1) * scale;
         fruitYcoord = (Math.floor(Math.random() * columns -1) + 1) * scale;
-        //score.push(tailSize);
-        //localStorage.setItem("score",score);
-        // console.log(score);
 
         //Speeds up snake gradually for each fruit on Normal and Hard mode
         if (buttonClick === "normal") {
@@ -145,6 +188,15 @@ function gamePlay() {
             if (speed < 10){
                 speed = 10;
             };
+        };
+        if (buttonClick === "impossible") {
+            speed = speed - 20;
+            clearInterval(timer);
+            move();
+
+            if (speed < 5) {
+                speed = 5;
+            };
         }
     };
     //fills tail 
@@ -162,6 +214,7 @@ function fillTail() {
     for (i = 0; i < tail.length; i++) {
         ctx.fillRect(tail[i].x, tail[i].y, scale, scale);
         if (tail[i].x === xCoord && tail[i].y === yCoord) {
+            deathReason = "Snake got your tail?"
             localStore();
             gameOver();
             console.log("gotchatail");
@@ -182,49 +235,76 @@ function update() {
     yCoord += ySpeed; 
     if (xCoord > canvas.width) {
         xCoord = 0;
+        deathReason = "Can't ssslither through that."
         localStore();
         gameOver();
-        console.log("Dead right");
     } if (xCoord < 0) {
+        deathReason = "Can't ssslither through that."
         xCoord = canvas.width;
         localStore();
         gameOver();
-        console.log("Dead Left");
     } if (yCoord > canvas.height) {
+        deathReason = "Can't ssslither through that."
         yCoord = 0;
         localStore();
         gameOver();
-        console.log("Dead Down");
     } if (yCoord < 0) {
+        deathReason = "Can't ssslither through that."
         yCoord = canvas.height;
         localStore();
         gameOver();
-        console.log("Dead Up");
     };
 };
 
+function randomGif() {
+    fetch("http://api.giphy.com/v1/gifs/random?api_key=FgQZWTJ3JSHeXHfkw5pfiRMCXjyd8kxc")
+    .then(function(response) {
+        return response.json();
+    })
+    .then(function(response) {
+        //console.log(response.data.image_url);
+        let source = response.data.image_url;
+        let gameOverImg = document.createElement("img");
 
+        gameOverImg.setAttribute("src", source);
+        gameOverImg.setAttribute("class", "mx-auto");
+        gameOverImg.setAttribute("style", "max-height: 300px;");
 
+        canvasContainer.appendChild(gameOverImg);
+    })
+};
 
-const modal = document.querySelector("#modal-container");
-
-// variables for <p> in game over <div> and var for getting array in local storage for printing
-//playerScore = JSON.stringify(playerScore);
-// this ends game and has event listeners for high score section "buttons"
+// This ends game and has event listeners for high score section "buttons"
 function gameOver () {
+    if (tailSize > tempScore) {
+        let highScore = document.createElement("p");
+        highScore.textContent ="You got a High Score!";
+        highScore.setAttribute("class", "font-bold text-3xl my-3 text-red-600");
+
+        modal.appendChild(highScore);
+    };
+
     let scoreBoard = document.querySelector(".score")
     let playerScore = localStorage.getItem("score" ,"value")
-   
+    
+    //stops timer
     clearInterval(timer);
 
-    modal.classList.remove("invisible");
-    //gameContainer.setAttribute("class", "invisible");
-    // score.push(tailSize);
-    //localStorage.setItem("score",score);
-    scoreBoard.innerHTML= playerScore;
+    //adds score and removes canvas
+    canvasContainer.removeChild(canvas);
 
-   
-   //Play Again
+    randomGif();
+    
+    modal.removeAttribute("class", "invisible");
+    dead.setAttribute("class", "font-bold text-7xl text-red-600");
+    reason.setAttribute("class", "font-bold text-3xl my-3 text-red-600");
+    
+
+    reason.textContent = deathReason;
+
+    scoreBoard.innerHTML= playerScore;
+    
+    //Play Again
     playAgain.addEventListener("click", function () {
         location.reload();
     });
@@ -233,14 +313,10 @@ function gameOver () {
     quit.addEventListener("click", function () {
         location.reload();
     });
- 
-
-
-//playerScore = JSON.stringify(playerScore);
 };
-
 
 function localStore () {
-    score.push(tailSize);
-    localStorage.setItem("score",score);
+    localStorage.setItem("score", tailSize);
 };
+
+

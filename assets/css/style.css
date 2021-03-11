@@ -1,6 +1,3 @@
-.start-btn {
-    width: 15vw;
-}
 * {
     box-sizing: border-box;
     margin: 0;
@@ -11,17 +8,17 @@ h1 {
 font-size: 5vh;
 }
 
-main {
-    min-height: 125vh;
+footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
-.body {
-    margin: 0px;
-    padding: 0px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center; 
+
+.start-btn {
+    width: 15vw;
 }
+
 .canvas{
     box-shadow: purple 20px 10px 50px;
 }
