@@ -5,40 +5,59 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.0.3/tailwind.min.css">
     <link rel="stylesheet" href="./assets/css/style.css">
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.0.3/tailwind.min.css">
+
     <title>Snake</title>
 </head>
-<body>
+
+<body class="bg-green-200 text-center">
     <header>
-        <h1 class="text-center  p-2 font-bold text-purple-600 bg-green-200 text-7xl">SSSSSSSSSSSNAKE</h1>
-        <h2><span id="score"></span></h2>
+        <h1 class="p-6 font-bold border-b-2 border-purple-600 text-purple-600 bg-green-200 text-7xl">SSSSSSSSSSSNAKE</h1>
     </header>
 
     <main id="main" class="text-center">
+        <div>
+            <h2 id="gameDone" class="text-7xl font-bold invisible">Game Over!</h2>
+            <p id="deathReason" class="text-3xl invisible"></p>
+        </div>
+
+        <!--Options to select difficulty-->
         <div id="startOptions">
-            <h2>Would you like to play on: </h2>
+            <h2 class="font-bold text-3xl mb-4 text-purple-600">Would you like to play on: </h2>
             <ul>
-                <li><button type="button" class="my-2 py-3 font-bold bg-green-200 text-purple-600 start-btn" id="easy">Easy</button></li>
-                <li><button type="button" class="my-2 py-3 font-bold bg-green-200 text-purple-600 start-btn" id="normal">Normal</button></li>
-                <li><button type="button" class="my-2 py-3 font-bold bg-green-200 text-purple-600 start-btn" id="hard">Hard</button></li>
+                <li><button type="button" class="rounded-2xl border-2 border-purple-600 mb-2 py-3 font-bold bg-green-200 text-purple-600 start-btn" id="easy">Easy</button></li>
+                <li><button type="button" class="rounded-2xl border-2 border-purple-600 mb-2 py-3 font-bold bg-green-200 text-purple-600 start-btn" id="normal">Normal</button></li>
+                <li><button type="button" class="rounded-2xl border-2 border-purple-600 mb-2 py-3 font-bold bg-green-200 text-purple-600 start-btn" id="hard">Hard</button></li>
+                <li><button type="button" class="rounded-2xl border-2 border-purple-600 mb-2 py-3 font-bold bg-green-200 text-purple-600 start-btn" id="impossible">Impossible</button></li>
             </ul>
         </div>
 
-        <div id="gameContainer" class="grid grid-cols-2 invisible">
-            <div class="hide"><canvas id="canvas"  style="background-color: blueviolet"></canvas></div>
-            <div>bfsvz fd sd</div>
+        <!--Container that holds game board-->
+        <div id="gameContainer" class=" invisible">
+            <div id="canvasContainer"><canvas class="canvas mx-auto" id="canvas" style="background-color: blueviolet"></canvas></div>
         </div>
-    </main>
-
-    <footer class="bg-green-200">
-        Dan and Sebastian and Jordan
-    </footer>
-
     
-
+        <!--high score-->
+        <div id="modal-container" class="invisible">
+            <h2 class="text-purple-600 text-5xl font-bold  mt-7 mb-3">SCORE</h2>
+            <p class="score text-purple-600 font-bold mb-3 text-5xl"></p>
+            
+            <div class="modal ">
+                <button class="play-again bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">PLAY AGAIN</button> <button class=" quit bg-red-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">QUIT</button>
+            </div>
+        </div>
+        <footer class="font-bold text-3xl text-purple-600 border-t-2 border-purple-600 bg-green-200 mt-2 py-10">
+            Dan and Sebastian and Jordan
+        </footer>
+    </main>
+   
     <!--Linking js file-->
     <script type="text/javascript" src="./assets/js/script.js"> </script>
 </body>
 </html>
+
+
+
+
+

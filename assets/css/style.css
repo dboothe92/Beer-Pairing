@@ -1,3 +1,24 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+font-size: 5vh;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
 .start-btn {
     width: 15vw;
+}
+
+.canvas{
+    box-shadow: purple 20px 10px 50px;
 }
